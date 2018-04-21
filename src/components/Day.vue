@@ -275,10 +275,18 @@ export default {
         this.isDisabled = false;
       }
       if (this.isDateLessOrEquals(this.checkIn, this.date) && this.options.enableCheckout ){
-        this.isDisabled = false
+          this.isDisabled = false;
       }
       else {
-        return
+          let enableDate = this.sortedDisabledDates.find(p => p > this.checkIn);
+          let lastDisableDate = this.sortedDisabledDates.find(p => p < this.date && p > this.checkIn);
+          if (this.compareDay(this.date, this.checkIn) == 1 && this.compareDay(this.date, enableDate)==0) {
+              this.isDisabled = false;
+          }
+          if (lastDisableDate) {
+              this.isDisabled = true;
+          }
+          return
       }
     },
   },
